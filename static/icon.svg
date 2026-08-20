@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      .cream  { fill: #FBF6EC; }
+      .paper  { fill: #FFFCF5; }
+      .ink    { fill: #2B2622; }
+      .tomato { fill: #C1442D; }
+      .sage   { fill: #64826A; }
+      .butter { fill: #E8B93F; }
+    </style>
+  </defs>
+
+  <!-- badge -->
+  <circle class="cream" cx="50" cy="50" r="48" />
+  <circle cx="50" cy="50" r="45.5" fill="none" stroke="#E8B93F" stroke-width="3" />
+
+  <!-- steam, rising into an orbit -->
+  <path d="M42 44 C38 38, 46 34, 42 28 C38 22, 46 18, 43 13"
+        fill="none" stroke="#64826A" stroke-width="4.2" stroke-linecap="round" opacity="0.85" />
+
+  <!-- orbiting atom above the steam: from-scratch model, cooked live -->
+  <g transform="translate(58 20)">
+    <ellipse cx="0" cy="0" rx="13" ry="5.4" fill="none" stroke="#2B2622" stroke-width="2.2"
+              transform="rotate(-24)" />
+    <ellipse cx="0" cy="0" rx="13" ry="5.4" fill="none" stroke="#2B2622" stroke-width="2.2"
+              transform="rotate(36)" />
+    <circle cx="0" cy="0" r="3.4" class="tomato" />
+    <circle cx="10.8" cy="-2.6" r="2.1" class="butter" />
+  </g>
+
+  <!-- pot -->
+  <path d="M27 52 L73 52 L68 82 Q68 87 62 87 L38 87 Q32 87 32 82 Z" class="ink" />
+  <rect x="24" y="47" width="52" height="8" rx="4" class="tomato" />
+  <path d="M20 51 Q14 51 14 45 Q14 39 20 39" fill="none" stroke="#2B2622" stroke-width="4.4" stroke-linecap="round" />
+  <path d="M80 51 Q86 51 86 45 Q86 39 80 39" fill="none" stroke="#2B2622" stroke-width="4.4" stroke-linecap="round" />
+
+  <!-- simmer line -->
+  <path d="M36 68 Q43 63 50 68 T64 68" fill="none" stroke="#E8B93F" stroke-width="3.2" stroke-linecap="round" />
+</svg>

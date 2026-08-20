@@ -1,0 +1,502 @@
+/* ---------------------------------------------------------
+   Tokens
+--------------------------------------------------------- */
+:root {
+  --cream: #F7EFDD;
+  --paper: #FFFCF5;
+  --ink: #2B2622;
+  --ink-soft: #5A5148;
+  --tomato: #C1442D;
+  --tomato-dark: #9A331F;
+  --sage: #64826A;
+  --butter: #E8B93F;
+  --line: rgba(43, 38, 34, 0.14);
+  --shadow: 0 1px 0 rgba(43,38,34,0.04), 0 8px 24px rgba(43,38,34,0.08);
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-font-smoothing: antialiased; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at top, #FFFDF7 0%, var(--cream) 55%),
+    var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  position: relative;
+  overflow-x: hidden;
+}
+
+a { color: var(--tomato-dark); }
+
+:focus-visible {
+  outline: 2px solid var(--tomato);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+/* ---------------------------------------------------------
+   Ambient steam (signature atmosphere, kept quiet)
+--------------------------------------------------------- */
+.steam {
+  position: fixed;
+  top: -40px;
+  left: 50%;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  z-index: 0;
+}
+.steam span {
+  position: absolute;
+  bottom: 0;
+  width: 120px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%);
+  filter: blur(6px);
+  opacity: 0.5;
+  animation: rise 14s ease-in infinite;
+}
+.steam span:nth-child(1) { left: -220px; animation-delay: 0s; }
+.steam span:nth-child(2) { left: 0; animation-delay: 4.5s; }
+.steam span:nth-child(3) { left: 220px; animation-delay: 9s; }
+
+@keyframes rise {
+  0%   { transform: translateY(0) scaleX(1); opacity: 0; }
+  15%  { opacity: 0.45; }
+  100% { transform: translateY(-420px) scaleX(1.4); opacity: 0; }
+}
+
+/* ---------------------------------------------------------
+   Hero
+--------------------------------------------------------- */
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: 5.5rem 1.5rem 4rem;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-inner { max-width: 640px; margin: 0 auto; }
+
+.logo-mark {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 1.1rem;
+  filter: drop-shadow(0 4px 10px rgba(43,38,34,0.12));
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tomato-dark);
+  margin: 0 0 0.9rem;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  margin: 0 0 1.1rem;
+  letter-spacing: -0.01em;
+}
+
+.dek {
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  max-width: 46ch;
+  margin: 0 auto 1.75rem;
+}
+
+.model-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--butter);
+  transition: background 0.3s ease;
+}
+.dot.ok { background: var(--sage); }
+.dot.err { background: var(--tomato); }
+
+/* ---------------------------------------------------------
+   Layout
+--------------------------------------------------------- */
+.kitchen {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 2rem;
+  display: grid;
+  gap: 2rem;
+}
+
+.card {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 0 0 1.25rem;
+}
+
+/* ---------------------------------------------------------
+   Recipe / order card
+--------------------------------------------------------- */
+.recipe-card { padding-top: 2.75rem; }
+
+.card-tab {
+  position: absolute;
+  top: -13px;
+  left: 28px;
+  background: var(--tomato);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: 5px;
+  box-shadow: 0 3px 8px rgba(193,68,45,0.35);
+}
+
+.field-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.4rem;
+}
+
+textarea#prompt {
+  width: 100%;
+  resize: vertical;
+  min-height: 3.2rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 2px dashed var(--line);
+  padding: 0.4rem 0.1rem 0.8rem;
+}
+textarea#prompt:focus { outline: none; border-bottom-color: var(--tomato); }
+
+.hint {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  text-align: right;
+}
+
+/* ---------------------------------------------------------
+   Oven dials — the signature element
+--------------------------------------------------------- */
+.dials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0 1.75rem;
+}
+
+.dial-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.oven-dial {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #fffaf0 0%, #efe6d2 55%, #ddd0b3 100%);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.7), 0 3px 6px rgba(43,38,34,0.15);
+  position: relative;
+  margin-bottom: 0.65rem;
+}
+
+.oven-dial::before {
+  /* tick marks */
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(var(--line) 0deg 2deg, transparent 2deg 30deg);
+  opacity: 0.5;
+  mask: radial-gradient(circle, transparent 62%, #000 63%, #000 68%, transparent 69%);
+  -webkit-mask: radial-gradient(circle, transparent 62%, #000 63%, #000 68%, transparent 69%);
+}
+
+.oven-dial-face {
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #fff 0%, #f1e8d6 100%);
+  transform: rotate(var(--angle));
+  transition: transform 0.15s ease-out;
+}
+
+.oven-dial-needle {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 3px;
+  height: 38%;
+  background: var(--tomato);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transform-origin: bottom center;
+}
+
+.dial-unit label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+}
+
+.dial-unit input[type="range"] {
+  width: 100%;
+  max-width: 130px;
+  accent-color: var(--tomato);
+  margin-bottom: 0.35rem;
+}
+
+.dial-unit output {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+.dial-caption {
+  margin: 0.35rem 0 0;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  max-width: 15ch;
+}
+
+/* ---------------------------------------------------------
+   Ignite button
+--------------------------------------------------------- */
+.ignite-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+  background: linear-gradient(180deg, var(--tomato) 0%, var(--tomato-dark) 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 0.95rem 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(193,68,45,0.32);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+.ignite-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(193,68,45,0.4); }
+.ignite-btn:active { transform: translateY(0); }
+.ignite-btn:disabled { opacity: 0.65; cursor: progress; transform: none; }
+
+.flame {
+  color: var(--butter);
+  font-size: 0.6rem;
+}
+.ignite-btn.working .flame { animation: flicker 0.9s ease-in-out infinite; }
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.75); }
+}
+
+.error {
+  margin: 1rem 0 0;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: rgba(193,68,45,0.08);
+  border: 1px solid rgba(193,68,45,0.25);
+  color: var(--tomato-dark);
+  font-size: 0.88rem;
+}
+
+/* ---------------------------------------------------------
+   Output / order-up card — torn ticket look
+--------------------------------------------------------- */
+.output-card {
+  font-family: var(--font-mono);
+  background: var(--ink);
+  color: #F7EFDD;
+  border: none;
+}
+
+.ticket-notch {
+  position: absolute;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  background: var(--cream);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+.ticket-notch.left { left: -11px; }
+.ticket-notch.right { right: -11px; }
+
+.output-card h2 {
+  font-family: var(--font-display);
+  color: #F7EFDD;
+}
+
+.output-body {
+  min-height: 5rem;
+  white-space: pre-wrap;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  border-top: 1px dashed rgba(247,239,221,0.25);
+  padding-top: 1.1rem;
+}
+
+.output-body .placeholder {
+  color: rgba(247,239,221,0.55);
+  font-family: var(--font-body);
+  font-style: italic;
+}
+
+.output-body .prompt-echo {
+  color: var(--butter);
+}
+
+.output-meta {
+  margin-top: 1.1rem;
+  display: flex;
+  gap: 1.2rem;
+  font-size: 0.72rem;
+  color: rgba(247,239,221,0.55);
+}
+
+/* ---------------------------------------------------------
+   About card
+--------------------------------------------------------- */
+.about-card p {
+  color: var(--ink-soft);
+  font-size: 0.97rem;
+}
+
+.specs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 1.5rem;
+  margin: 1.5rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.specs dt {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 0.2rem;
+}
+.specs dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   Footer
+--------------------------------------------------------- */
+.site-footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2.5rem 1.5rem 3.5rem;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
+
+.site-footer .credit {
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+}
+
+.site-footer .credit strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.credit-links {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-left: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.credit-links a {
+  color: var(--tomato-dark);
+  text-decoration: none;
+}
+.credit-links a:hover { text-decoration: underline; }
+
+/* ---------------------------------------------------------
+   Responsive
+--------------------------------------------------------- */
+@media (max-width: 560px) {
+  .hero { padding: 3.5rem 1.25rem 3rem; }
+  .kitchen { padding: 2.5rem 1.25rem 1.5rem; }
+  .card { padding: 1.5rem; }
+  .dials { grid-template-columns: 1fr; gap: 1.5rem; }
+  .specs { grid-template-columns: 1fr 1fr; }
+}

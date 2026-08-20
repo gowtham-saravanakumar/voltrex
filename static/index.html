@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Voltrex — a tiny transformer, from scratch</title>
+<meta name="description" content="A tiny decoder-only transformer, trained from scratch. Set the dials, pick a prompt, see what it generates." />
+<link rel="icon" href="favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="icon.svg" />
+<link rel="icon" type="image/png" sizes="16x16" href="icon-16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="steam" aria-hidden="true">
+  <span></span><span></span><span></span>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <img class="logo-mark" src="mascot.svg" width="72" height="72" alt="Voltrex logo: a battle-worn chrome robot bust with a single amber optic" />
+    <p class="eyebrow">a foundation model, forged from scratch</p>
+    <h1>Voltrex</h1>
+    <p class="dek">
+      A tiny decoder-only transformer — no pretrained weights, no borrowed brains.
+      Every parameter learned from a small corpus of kitchen sentences. Small enough
+      to run on a laptop CPU; honest enough to admit it.
+    </p>
+    <div class="model-badge" id="model-badge">
+      <span class="dot" id="status-dot"></span>
+      <span id="status-text">booting core&hellip;</span>
+    </div>
+  </div>
+</header>
+
+<main class="kitchen">
+
+  <section class="card recipe-card" aria-labelledby="prompt-heading">
+    <div class="card-tab">the order</div>
+    <h2 id="prompt-heading">Give it a prompt</h2>
+    <label class="field-label" for="prompt">starting line</label>
+    <textarea id="prompt" maxlength="300" rows="2" placeholder="the machine&hellip;">the machine</textarea>
+    <p class="hint" id="prompt-count">8 / 300</p>
+
+    <div class="dials">
+
+      <div class="dial-unit">
+        <div class="oven-dial" id="temp-dial" style="--angle: -60deg">
+          <div class="oven-dial-face">
+            <div class="oven-dial-needle"></div>
+          </div>
+        </div>
+        <label for="temperature">temperature</label>
+        <input type="range" id="temperature" min="0.05" max="2" step="0.05" value="0.8" />
+        <output for="temperature" id="temperature-out">0.80</output>
+        <p class="dial-caption">low = plays it safe · high = improvises</p>
+      </div>
+
+      <div class="dial-unit">
+        <div class="oven-dial" id="topk-dial" style="--angle: -60deg">
+          <div class="oven-dial-face">
+            <div class="oven-dial-needle"></div>
+          </div>
+        </div>
+        <label for="top_k">ingredient shelf (top-k)</label>
+        <input type="range" id="top_k" min="0" max="100" step="1" value="20" />
+        <output for="top_k" id="top_k-out">20</output>
+        <p class="dial-caption">how many candidate words it may reach for</p>
+      </div>
+
+      <div class="dial-unit">
+        <div class="oven-dial" id="tokens-dial" style="--angle: -60deg">
+          <div class="oven-dial-face">
+            <div class="oven-dial-needle"></div>
+          </div>
+        </div>
+        <label for="max_new_tokens">run length (tokens)</label>
+        <input type="range" id="max_new_tokens" min="5" max="200" step="5" value="40" />
+        <output for="max_new_tokens" id="max_new_tokens-out">40</output>
+        <p class="dial-caption">how many tokens to generate</p>
+      </div>
+
+    </div>
+
+    <button id="generate-btn" class="ignite-btn">
+      <span class="flame" aria-hidden="true">&#9679;</span>
+      <span id="generate-label">activate</span>
+    </button>
+    <p class="error" id="error-msg" role="alert" hidden></p>
+  </section>
+
+  <section class="card output-card" aria-labelledby="output-heading">
+    <div class="ticket-notch left"></div>
+    <div class="ticket-notch right"></div>
+    <h2 id="output-heading">Order up</h2>
+    <div class="output-body" id="output">
+      <p class="placeholder">Nothing generated yet — set your dials and press <em>activate</em>.</p>
+    </div>
+    <div class="output-meta" id="output-meta" hidden>
+      <span id="meta-step"></span>
+      <span id="meta-loss"></span>
+    </div>
+  </section>
+
+  <section class="card about-card">
+    <h2>What is this, exactly?</h2>
+    <p>
+      This isn&rsquo;t a wrapper around a big commercial model. It&rsquo;s a small
+      decoder-only transformer — attention blocks, an MLP, causal masking, the same
+      pattern every language model uses — built from raw building blocks and trained
+      from a blank slate on a small text corpus.
+    </p>
+    <p>
+      It won&rsquo;t write you an essay. It will, with any luck, string together a
+      plausible, grammatical sentence within its narrow training domain.
+      That gap between what it is and what it sounds like it should be, is the whole
+      point of a toy model: you can see the machinery.
+    </p>
+    <dl class="specs" id="specs">
+      <div><dt>parameters</dt><dd>loading&hellip;</dd></div>
+      <div><dt>layers</dt><dd>&mdash;</dd></div>
+      <div><dt>context window</dt><dd>&mdash;</dd></div>
+      <div><dt>vocab size</dt><dd>&mdash;</dd></div>
+    </dl>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Served straight from the checkpoint — every request runs live inference, nothing is cached or canned.</p>
+  <p class="credit">
+    Created by <strong>Gowtham Saravanakumar</strong>
+    <span class="credit-links">
+      <a href="https://buymeacoffee.com/gowthamsaravanakumar" target="_blank" rel="noopener noreferrer">Buy me a coffee</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://in.linkedin.com/in/gowtham-now" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/gowtham-saravanakumar" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </span>
+  </p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

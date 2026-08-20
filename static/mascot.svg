@@ -1,0 +1,50 @@
+<svg width="680" height="680" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Original chrome AI guardian mascot</title>
+<desc>A stylized, faceted chrome robot bust with a single glowing amber optic, battle-worn plating, and a slow idle sway plus a moving light sheen across the metal.</desc>
+<defs>
+<linearGradient id="sheen" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#eef2f4" stop-opacity="0.55"/>
+<stop offset="50%" stop-color="#eef2f4" stop-opacity="0"/>
+<stop offset="100%" stop-color="#eef2f4" stop-opacity="0"/>
+</linearGradient>
+<clipPath id="frame"><rect x="0" y="0" width="680" height="680" rx="0"/></clipPath>
+</defs>
+<style>
+@keyframes sway { 0%,100% { transform: rotate(-0.6deg); } 50% { transform: rotate(0.6deg); } }
+@keyframes optpulse { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
+@keyframes sweep { 0% { transform: translateX(-260px); } 100% { transform: translateX(320px); } }
+.rig { transform-origin: 340px 620px; animation: sway 5.5s ease-in-out infinite; }
+.optic { animation: optpulse 2.4s ease-in-out infinite; }
+.sheenband { animation: sweep 6s linear infinite; }
+</style>
+<rect x="0" y="0" width="680" height="680" fill="#090b0d"/>
+<circle cx="340" cy="300" r="360" fill="#12161a"/>
+<g clip-path="url(#frame)">
+<g class="rig">
+<polygon points="200,470 480,470 520,600 500,680 180,680 160,600" fill="#2a2f34"/>
+<polygon points="200,470 340,480 220,600 180,680" fill="#3a4046"/>
+<polygon points="480,470 340,480 460,600 500,680" fill="#1c2024"/>
+<rect x="300" y="380" width="80" height="110" fill="#3d434a"/>
+<rect x="300" y="380" width="34" height="110" fill="#54595f"/>
+<polygon points="230,120 450,120 470,220 445,320 400,380 280,380 235,320 210,220" fill="#4a5057"/>
+<polygon points="230,120 340,130 260,320 235,320 210,220" fill="#63696f"/>
+<polygon points="450,120 340,130 420,320 445,320 470,220" fill="#33383d"/>
+<polygon points="255,150 425,150 440,210 240,210" fill="#3a4046"/>
+<polygon points="245,215 435,215 425,320 255,320" fill="#25292d"/>
+<g class="optic">
+<rect x="255" y="238" width="170" height="14" rx="7" fill="#ff6a2b" opacity="0.25"/>
+<rect x="262" y="241" width="156" height="8" rx="4" fill="#ff8a4d" opacity="0.55"/>
+<rect x="270" y="243" width="140" height="4" rx="2" fill="#ffd9bd"/>
+</g>
+<line x1="270" y1="160" x2="255" y2="205" stroke="#181b1e" stroke-width="3" stroke-linecap="round"/>
+<line x1="410" y1="155" x2="430" y2="200" stroke="#181b1e" stroke-width="2" stroke-linecap="round"/>
+<line x1="300" y1="290" x2="330" y2="310" stroke="#14171a" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="300" y1="330" x2="360" y2="345" stroke="#54595f" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+<circle cx="340" cy="128" r="6" fill="#202427"/>
+<circle cx="300" cy="140" r="3.5" fill="#202427"/>
+<circle cx="380" cy="140" r="3.5" fill="#202427"/>
+<path d="M340 380 Q345 400 340 420" fill="none" stroke="#14171a" stroke-width="2"/>
+</g>
+<rect class="sheenband" x="-260" y="0" width="140" height="680" fill="url(#sheen)" transform="skewX(-18)"/>
+</g>
+</svg>

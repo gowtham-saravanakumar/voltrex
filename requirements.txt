@@ -1,0 +1,5 @@
+fastapi>=0.115,<0.120
+uvicorn[standard]>=0.32,<0.40
+pydantic>=2.10,<3
+torch>=2.3,<3
+tokenizers>=0.20,<0.24
